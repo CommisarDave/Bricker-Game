@@ -1,11 +1,12 @@
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+var game = new Phaser.Game(500, 700, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
 
 function preload() {
 
-    game.load.atlas('breakout', 'assets/images/bricker.png', 'assets/images/bricker.json');
+    game.load.atlas('bricker', 'assets/images/bricker.png', 'assets/images/bricker.json');
     game.load.image('field', 'assets/images/bricker background.png');
-    game.load.image('enemyBullet', 'assets/images/magic bolt.png');
+    game.load.image('titlePage', 'assets/images/Title Page.png');
+    game.load.image('magicBolt', 'assets/images/magic bolt.png');
 
 }
 var uri = 'http://mcm-highscores-hrd.appspot.com/';
@@ -20,7 +21,7 @@ var lives = 3;
 var score = 0;
 var scoreText;
 var livesText;
-var introText;
+var introPage;
 var gameName;
 var name;
 var email;
@@ -33,7 +34,7 @@ function create() { //Collision detection for walls and ceiling of the game area
 
     game.physics.arcade.checkCollision.down = false;
 
-    s = game.add.tileSprite(0, 0, 800, 600, 'field');
+    s = game.add.tileSprite(0, 0, 500, 700, 'field');
 
     wall = game.add.group();
     wall.enableBody = true;
@@ -43,15 +44,15 @@ function create() { //Collision detection for walls and ceiling of the game area
 
     for (var y = 0; y < 4; y++)
     {
-        for (var x = 0; x < 15; x++)
+        for (var x = 0; x < 12; x++)
         {
-            walls = wall.create(120 + (x * 36), 100 + (y * 52), 'breakout', 'brick_' + (y+1) + '_1.png');
+            walls = wall.create(32 + (x * 36), 100 + (y * 52), 'bricker', 'brick_' + (y+1) + '_1.png');
             walls.body.bounce.set(1);
             walls.body.immovable = true;
         }
     }
 
-    sheild = game.add.sprite(game.world.centerX, 500, 'breakout', 'paddle_big.png');
+    sheild = game.add.sprite(game.world.centerX, 500, 'bricker', 'paddle_big.png');
     sheild.anchor.setTo(0.5, 0.5);
 
     game.physics.enable(sheild, Phaser.Physics.ARCADE);
@@ -60,7 +61,7 @@ function create() { //Collision detection for walls and ceiling of the game area
     sheild.body.bounce.set(1);
     sheild.body.immovable = true;
 
-    canonball = game.add.sprite(game.world.centerX, sheild.y - 16, 'breakout', 'ball_1.png');
+    canonball = game.add.sprite(game.world.centerX, sheild.y - 16, 'bricker', 'ball_1.png');
     canonball.anchor.set(0.5);
     canonball.checkWorldBounds = true;
 
@@ -73,15 +74,15 @@ function create() { //Collision detection for walls and ceiling of the game area
 
     canonball.events.onOutOfBounds.add(ballLost, this);
 
-    scoreText = game.add.text(32, 30, 'score: 0', { font: "30px Arial", fill: "#ffffff", align: "left" });
-    livesText = game.add.text(680, 30, 'lives: 3', { font: "30px Arial", fill: "#ffffff", align: "left" });
-    introText = game.add.text(game.world.centerX, 400, 'Click to begin your quest', { font: "60px Arial", fill: "#ffffff", align: "center" });
-    introText.anchor.setTo(0.5, 0.5);
+    scoreText = game.add.text(32, 30, 'score: 0', { font: "30px Comic Sans MS", fill: "#ff0000", align: "left" });
+    livesText = game.add.text(380, 30, 'lives: 3', { font: "30px Comic Sans MS", fill: "#ff0000", align: "left" });
+    introPage = game.add.sprite(game.world.centerX,350, 'titlePage');
+    introPage.anchor.setTo(0.5, 0.5);
 
     magicBolts = game.add.group();
     magicBolts.enableBody = true;
     magicBolts.physicsBodyType = Phaser.Physics.ARCADE;
-    magicBolts.createMultiple(1, 'enemyBullet');
+    magicBolts.createMultiple(1, 'magicBolt');
     magicBolts.setAll('anchor.x', 0.5);
     magicBolts.setAll('anchor.y', 1);
     magicBolts.setAll('outOfBoundsKill', true);
@@ -91,7 +92,7 @@ function create() { //Collision detection for walls and ceiling of the game area
 
 
     name = 'Robert';
-    email = name + '@googlemail.com';
+    email = 'robertp92@googlemail.com';
     gameName = 'Bricker';
 
 
@@ -121,7 +122,7 @@ function update () {
     {
         (game.time.now > firingTimer)
         {
-            enemyFires();
+            brickFires();
         }
 
        //Collision detection
@@ -142,7 +143,7 @@ function releaseBall () {
         canonball.body.velocity.y = -300;
         canonball.body.velocity.x = -75;
         canonball.animations.play('spin');
-        introText.visible = false;
+        introPage.visible = false;
     }
 
 }
@@ -246,7 +247,7 @@ function enemyHitsPlayer (sheild,bullet) {
 
 }
 
-function enemyFires () {
+function brickFires () {
 
     // Select the first magic bolt.
     magicBolt = magicBolts.getFirstExists(false);
