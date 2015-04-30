@@ -223,14 +223,4 @@
 	"trimmed": true,
 	"spriteSourceSize": {"x":1,"y":16,"w":30,"h":48},
 	"sourceSize": {"w":32,"h":64}
-}],
-"meta": {
-	"app": "http://www.texturepacker.com",
-	"version": "1.0",
-	"image": "breakout.png",
-	"format": "RGBA8888",
-	"size": {"w":302,"h":64},
-	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:c510ff2f709e8d175b059cd1cbe64773$"
-}
-}
+}]}
