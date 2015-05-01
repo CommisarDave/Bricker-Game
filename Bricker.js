@@ -1,4 +1,5 @@
 
+
 var game = new Phaser.Game(500, 700, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
 
 function preload() {
@@ -27,6 +28,7 @@ var gameName;
 var name;
 var email;
 var s;
+
 
 function create() { //Collision detection for walls and ceiling of the game area.
 
@@ -93,9 +95,9 @@ function create() { //Collision detection for walls and ceiling of the game area
     game.input.onDown.add(releaseBall, this);
 
 
-    name = 'Robert';
-    email = 'robertp92@googlemail.com';
-    gameName = 'Bricker';
+    name = 'David';
+    email = 'commisard93@gmail.com';
+    gameName = 'Bricker-Game';
 
 
 
@@ -289,9 +291,13 @@ function gameOver () {
     introText.text = 'Game Over!';
     introText.visible = true;
 
+    canonball.kill();
+
+    sheild.kill();
 
 
     console.log(score);
+
     submitScore(gameName, name, email, score);
     getTable();
     showScoreTable();
@@ -299,13 +305,15 @@ function gameOver () {
 }
 
 
-function submitScore(game, name, email, score) {
+function submitScore(gameName, name, email, score) {
     var url = uri + "score?game={0}&nickname={1}&email={2}&score={3}&func=?";
-    url = url.replace('{0}', game);
+    url = url.replace('{0}', gameName);
     url = url.replace('{1}', name);
     url = url.replace('{2}', email);
     url = url.replace('{3}', score);
     document.getElementById('url').innerText = url;
+
+
 
     $.ajax({
         type:  "GET",
@@ -332,8 +340,8 @@ function showScoreTable(obj) {
     document.getElementById("scoretable").innerHTML = s;
 }
 
-function getTable(game) {
-    var url = uri + "scoresjsonp?game=" + game + "&func=?";
+function getTable() {
+    var url = uri + "scoresjsonp?game=" + gameName + "&func=?";
     document.getElementById('url').innerText = url;
     $.ajax({
         type: "GET",
