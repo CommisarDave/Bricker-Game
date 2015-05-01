@@ -22,6 +22,7 @@ var score = 0;
 var scoreText;
 var livesText;
 var introPage;
+var introText;
 var gameName;
 var name;
 var email;
@@ -76,6 +77,7 @@ function create() { //Collision detection for walls and ceiling of the game area
 
     scoreText = game.add.text(32, 30, 'score: 0', { font: "30px Comic Sans MS", fill: "#ff0000", align: "left" });
     livesText = game.add.text(380, 30, 'lives: 3', { font: "30px Comic Sans MS", fill: "#ff0000", align: "left" });
+    introText = game.add.text(game.world.centerX, 350, '-click to start-', {font: "30px Comic Sans MS", fill: "#ff0000", align: "center"});
     introPage = game.add.sprite(game.world.centerX,350, 'titlePage');
     introPage.anchor.setTo(0.5, 0.5);
 
@@ -144,6 +146,7 @@ function releaseBall () {
         canonball.body.velocity.x = -75;
         canonball.animations.play('spin');
         introPage.visible = false;
+        introText.visible = false;
     }
 
 }
